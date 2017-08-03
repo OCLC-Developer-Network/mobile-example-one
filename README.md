@@ -9,7 +9,7 @@ These instructions assume you are developing on a Mac. See [Installing Cordova o
 # Requirements
 
 * [XCode Version 8.3 or greater](https://developer.apple.com/xcode/downloads/)
-    * You will need an Apple Developer account and a Developer Certificate
+    * You only need a free apple developer account to run apps locally. However, you will need an Apple Developer account and a Developer Certificate to install to the app store ($100 fee).
 * [Android Studio 2.2.2 or greater](https://developer.android.com/studio/index.html)
     * Android SDK 7.1.1 (API Level 25)
     * Tools
