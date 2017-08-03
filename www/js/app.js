@@ -1,4 +1,4 @@
-define(["app/wiggle"], function(wiggle) {
+define(["app/levelDisplay"], function(levelDisplay) {
 
     return {
         initialize: function() {
@@ -8,7 +8,7 @@ define(["app/wiggle"], function(wiggle) {
             document.addEventListener("deviceready", this.onDeviceReady, false);
         },
         onDeviceReady: function() {
-            wiggle.go();
+            levelDisplay.go();
         }
     };
 });

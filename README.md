@@ -1,4 +1,4 @@
-This is a starter PhoneGap application with a node.js builder, bower to manage javascript app dependencies, jasmine and karma for unit tests and cucumber and appium for functional tests. It builds a simple tilt meter.
+This is a starter PhoneGap application with a node.js builder, bower to manage javascript app dependencies, jasmine and karma for unit tests. It builds a simple tilt meter.
 
 <div style="width:100%; text-align:center; padding-bottom: 12px;">
 <img src="https://github.com/geocolumbus/geomob/blob/master/screen_shot.png" width=200"/>
@@ -36,7 +36,7 @@ Add ```./node_modules/.bin``` to your PATH environment variable.
 
 # Installation
 
-```git clone https://github.com/geocolumbus/geomob.git```
+```git clone https://github.com/OCLC-Developer-Network/mobile-example-one```
 
 ## Automatic 
 

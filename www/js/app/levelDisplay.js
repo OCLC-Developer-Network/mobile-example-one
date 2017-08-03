@@ -2,10 +2,7 @@ define(["jquery"], function($) {
 
     var _go = function() {
 
-        var water = $(".water"),
-            h1 = $("h1");
-
-        h1.html(device.model + " " + device.manufacturer);
+        var water = $(".water");
 
         /* Acceleration *************************************************************/
 
@@ -24,10 +21,10 @@ define(["jquery"], function($) {
 
                 // Mock the rotation changing when running in a browser on a laptop
                 deviceRotationAngle += rotationAngleAdder;
-                if (deviceRotationAngle > 5) {
+                if (deviceRotationAngle > 4) {
                     rotationAngleAdder = -1;
                 }
-                if (deviceRotationAngle < -5) {
+                if (deviceRotationAngle < -4) {
                     rotationAngleAdder = 1;
                 }
 
@@ -39,11 +36,11 @@ define(["jquery"], function($) {
 
             cssAngle = deviceRotationAngle;
 
-            if (window.orientation == -90) {
+            if (window.orientation === -90) {
                 cssAngle = -90 + deviceRotationAngle;
             }
 
-            if (window.orientation == 90) {
+            if (window.orientation === 90) {
                 cssAngle = 90 + deviceRotationAngle;
             }
 
@@ -59,15 +56,15 @@ define(["jquery"], function($) {
         }
 
         function onError(accelerationError) {
-            //console.log("Acceleration error");
-            //console.log(JSON.stringify(accelerationError, null, 4));
+            console.log("Acceleration error");
+            console.log(JSON.stringify(accelerationError, null, 4));
         }
 
         /* Run loop ****************************************************************/
 
         if (device.platform === "browser") {
             // Slow down the update time so you can edit CSS live with the developer tools in the browser
-            updateTimeMsec=1000;
+            updateTimeMsec=500;
         }
 
         setInterval(function() {

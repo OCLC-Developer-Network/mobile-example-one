@@ -1,4 +1,4 @@
-define(['app/wiggle'],function(wiggle){
+define(['app/levelDisplay'],function(wiggle){
 
     describe("Wiggle",function(){
 
