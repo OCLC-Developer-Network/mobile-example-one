@@ -1,0 +1,10 @@
+bower_components
+coverage
+node_modules
+platforms
+plugins
+
+.idea
+*.iml
+
+www/js/libs
