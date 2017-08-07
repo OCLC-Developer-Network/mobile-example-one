@@ -24,3 +24,16 @@ body {
     margin-left: 10%;
 }
 
+.access-token-properties {
+    color: #333;
+}
+
+.access-token-properties .key {
+    padding: 0.5em 0 0 0.25em;
+    font-weight: bold;
+}
+
+.access-token-properties .value {
+    padding-left: 1em;
+    font-size: 15px;
+}

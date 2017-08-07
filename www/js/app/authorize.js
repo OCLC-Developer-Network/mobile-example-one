@@ -26,17 +26,19 @@ define(["jquery", "handlebars", "config"], function($, Handlebars, config) {
 
         var hash = url.substring(url.indexOf("#"));
 
-        // we get here if the authorization flow completes and redirects to our redirect_uri with the accesstoken
+        // Clear the session storage error, if there is one.
+        window.sessionStorage.removeItem("error");
+
+        // we get here if the authorization flow completes and redirects to our redirect_uri with the access token
         // on the hashed part of the url (or an error occurs)
         var tokenResponse = _parseTokenResponse(hash);
 
         // if we have an access token then save it away and proceed
+
         if (tokenResponse["access_token"]) {
 
             // recalculate expires_at using the offset (seconds) and current time. we subtract 1 minute for good measure
             tokenResponse["expires_at"] = (new Date()).getTime() + (tokenResponse["expires_in"] * 1000) - 60000;
-
-            // window.storage.settings.setItem("tokenResponse", tokenResponse);
 
             var authInstitution = tokenResponse["authenticating_institution_id"];
             var institution = tokenResponse["context_institution_id"];
@@ -46,37 +48,41 @@ define(["jquery", "handlebars", "config"], function($, Handlebars, config) {
                 return;
             }
 
-            //window.storage.settings.setItem("authInstitution", authInstitution);
-            //window.storage.settings.setItem("institution", institution);
+            window.sessionStorage.setItem("access_token", tokenResponse["access_token"]);
+            window.sessionStorage.setItem("principalID", tokenResponse["principalID"]);
+            window.sessionStorage.setItem("principalIDNS", tokenResponse["principalIDNS"]);
+            window.sessionStorage.setItem("context_institution_id", tokenResponse["context_institution_id"]);
+            window.sessionStorage.setItem("authenticating_institution_id", tokenResponse["authenticating_institution_id"]);
+            window.sessionStorage.setItem("token_type", tokenResponse["token_type"]);
+            window.sessionStorage.setItem("expires_in", tokenResponse["expires_in"]);
+            window.sessionStorage.setItem("expires_at", tokenResponse["expires_at"]);
 
             // if we are logging in with the support institution then ask them what institution they
             // want to act on behalf of and go through the whole flow again!
             if (institution == config.SUPPORT_INSTITUTION) {
-                //window.navigate("app/selectclient");
                 console.log("We are logging in with the support institution!");
                 if (callback) {
-                    setTimeout(callback, 1000);
+                    setTimeout(callback(), 1000);
                 }
                 return;
             }
 
-            //window.navigate(tokenResponse["state"]);
-
             if (callback) {
-                setTimeout(callback, 1000);
+                setTimeout(callback(), 1000);
             }
 
         } else {
 
-            window.error({
-                message: tokenResponse.error,
-                status: tokenResponse.http_code,
-                detail: tokenResponse.error_description,
-                authenticatingInstitutionId: tokenResponse.authenticatingInstitutionId
-            });
+            // Pass the error information
+            window.sessionStorage.setItem("error",tokenResponse.error);
+            window.sessionStorage.setItem("http_code",tokenResponse.http_code);
+            window.sessionStorage.setItem("error_description",tokenResponse.error_description);
+            window.sessionStorage.setItem("authenticatingInstitutionId",tokenResponse.authenticatingInstitutionId);
 
             if (callback) callback();
+
         }
+        window.location.href = "index.html";
     }
 
     function _authorize(targetView) {
@@ -210,7 +216,6 @@ define(["jquery", "handlebars", "config"], function($, Handlebars, config) {
 
             // if the authorize never completed then redirect back to the login screen
             if (!authorizeComplete) {
-                window.navigate("app/login/dontbypass");
                 return;
             }
         });

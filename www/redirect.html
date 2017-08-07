@@ -1,6 +1,6 @@
 <script>
 
     var url = document.location.href;
-    window.location = "/index.html#app/redirect/:" + encodeURIComponent(url.substring(url.indexOf("#")));
+    window.location = "/index.html" + url.substring(url.indexOf("#"));
 
 </script>
