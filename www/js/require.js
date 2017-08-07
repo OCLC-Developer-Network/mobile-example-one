@@ -3,6 +3,7 @@ require.config({
 
     paths: {
         app: "app",
-        jquery: "libs/jquery/jquery"
+        jquery: "libs/jquery/jquery",
+        handlebars: "libs/handlebars/handlebars"
     }
 });

@@ -7,46 +7,20 @@ body {
     padding: 0;
     width: 100%;
     font-family: sans-serif;
-    background-image: url("../img/glass_container.png");
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
 }
 
-h1 {
-    text-align: center;
-    background-color: green;
-    color: white;
-    padding: 2px 0;
+.content {
+    background-color: lightgray;
+    position: relative;
+    height: 100%;
 }
 
-.spacer {
-    width: 200px;
-    height: 200px;
+.auth-button {
+    font-size: 40px;
+    display: block;
+    bottom: 20%;
+    position: absolute;
+    width: 80%;
+    margin-left: 10%;
 }
 
-.water {
-    width: 300%;
-    height: 500px;
-    margin-left: -100%;
-    background-color: deepskyblue;
-    opacity: 0.3;
-}
-
-@media (orientation: landscape) {
-    .water {
-        width: 500%;
-        margin-left: -200%;
-    }
-
-    .spacer {
-        width: 50px;
-        height: 50px;
-    }
-}
-
-.rotation-indicator {
-    font-size: 96px;
-    font-weight: bold;
-    text-align: center;
-    margin-top: 30px;
-}

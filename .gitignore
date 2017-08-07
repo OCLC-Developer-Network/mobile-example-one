@@ -8,3 +8,4 @@ plugins
 *.iml
 
 www/js/libs
+www/js/config.js

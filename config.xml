@@ -11,8 +11,7 @@
     <preference name="DisallowOverscroll" value="true" />
     <preference name="android-minSdkVersion" value="14" />
 
-    <plugin name="cordova-plugin-device" source="npm" spec="1.1.4" />
-    <plugin name="cordova-plugin-device-motion" source="npm" spec="~1.2.0" />
+    <plugin name="cordova-plugin-inappbrowser" source="npm" spec="1.6.1" />
 
     <platform name="android">
         <icon density="ldpi" src="www/res/icon/android/drawable-ldpi-icon.png" />

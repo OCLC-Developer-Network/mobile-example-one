@@ -1,5 +1,5 @@
 {
-    "name": "geomob",
+    "name": "mobile-example-one",
     "authors": [
         "George Campbell <campbelg@oclc.org>"
     ],
@@ -15,7 +15,9 @@
         "tests"
     ],
     "dependencies": {
+        "handlebars": "4.0.5",
         "jquery": "3.2.1",
+        "ratchet": "2.0.2",
         "requirejs": "2.3.3"
     },
     "install": {

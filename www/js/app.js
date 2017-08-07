@@ -1,4 +1,6 @@
-define(["app/levelDisplay"], function(levelDisplay) {
+define(["app/authorize","jquery"], function(authorize,$) {
+
+    console.log("*** app.js ***");
 
     return {
         initialize: function() {
@@ -8,7 +10,9 @@ define(["app/levelDisplay"], function(levelDisplay) {
             document.addEventListener("deviceready", this.onDeviceReady, false);
         },
         onDeviceReady: function() {
-            levelDisplay.go();
+            $(".auth-button").on("click",function(){
+                authorize.authorize("");
+            });
         }
     };
 });

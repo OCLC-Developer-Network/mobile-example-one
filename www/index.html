@@ -5,38 +5,33 @@
     <meta charset="utf-8"/>
     <meta name="viewport"
           content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width"/>
-    <!-- Good default declaration:
-    * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
-    * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
-    * Disables use of eval() and inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
-        * Enable inline JS: add 'unsafe-inline' to default-src
-        * Enable eval(): add 'unsafe-eval' to default-src
-    * Create your own at http://cspisawesome.com
-    -->
-    <meta http-equiv="Content-Security-Policy"
-          content="default-src 'self' data: gap: 'unsafe-inline' https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *"/>
+
+    <!-- Added to support iOS 10, and to permit handlebars.js to work properly -->
+    <meta http-equiv="Content-Security-Policy" content="default-src * gap://ready file:; style-src 'self' 'unsafe-inline' *; script-src 'self' 'unsafe-inline' 'unsafe-eval' *; img-src * data: file:;">
+
+    <link rel="stylesheet" type="text/css" href="js/libs/ratchet/ratchet.css"/>
     <link rel="stylesheet" type="text/css" href="css/index.css"/>
     <title>PhoneGap Starter</title>
 </head>
 
 <body>
-<div class="app">
 
-    <h1>Device Rotation</h1>
+<!-- See http://goratchet.com/components/ -->
+<header class="bar bar-nav">
+    <h1 class="title">OCLC WMS Authentication Example</h1>
+</header>
 
-    <div class="rotation-indicator"><span class="rotation-angle"></span>&deg;</div>
-
-    <div class="spacer"></div>
-
-    <div class="water"></div>
-
+<div class="content">
+    <button class="btn btn-primary auth-button">Authenticate</button>
 </div>
+
 
 <script type="text/javascript" src="cordova.js"></script>
 <script type="text/javascript" src="js/libs/requirejs/require.js"></script>
 <script type="text/javascript" src="js/require.js"></script>
+<script type="text/javascript" src="js/libs/ratchet/ratchet.js"></script>
 <script type="text/javascript">
-    require(["app"],function(app){
+    require(["app"], function(app) {
         app.initialize();
     });
 </script>
