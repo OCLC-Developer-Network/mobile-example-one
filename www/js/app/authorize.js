@@ -1,14 +1,23 @@
 define(["jquery", "handlebars", "config"], function($, Handlebars, config) {
 
-    var authorizeComplete = false;
-    var timeout = false;
+    var authorizeComplete = false,
 
-    // this doesn't really exist in a phonegap app (except when running locally with browser),
-    // we are going to catch the request below and pull off the access token.
-    var redirect_uri = config.REDIRECT_URI;
+        // When the PhoneGap app executes on a device, we will catch the refirect URI here in this logic.
+        // During development, when you run in the browser, the flow will actually redirect to the page
+        // indicated by the REDIRECT_URI. We handle that development-only case as well.
+        redirect_uri = config.REDIRECT_URI,
 
-    var ajaxTime;
+        // We will measure the time the flow takes so we can time out after 10 seconds if something goes wrong.
+        timeout = false,
+        ajaxTime;
 
+    /**
+     * Parse the token and associated parameters which are returned to the REDIRECT_URI upon successful completion
+     * of the authentication flow.
+     * @param URLhash
+     * @returns {Object}
+     * @private
+     */
     function _parseTokenResponse(URLhash) {
 
         var hash = URLhash.replace("#", "").split("&");
@@ -22,19 +31,25 @@ define(["jquery", "handlebars", "config"], function($, Handlebars, config) {
         return hashParams;
     }
 
+    /**
+     * Capture the redirect URI and process out the authentication token or error that comes with it.
+     * @param url
+     * @param callback
+     * @private
+     */
     function _handleRedirect(url, callback) {
 
         var hash = url.substring(url.indexOf("#"));
 
-        // Clear the session storage error, if there is one.
-        window.sessionStorage.removeItem("error");
+        // Clear the session storage
+        window.sessionStorage.removeItem("token_response");
+        window.sessionStorage.removeItem("error_response");
 
         // we get here if the authorization flow completes and redirects to our redirect_uri with the access token
         // on the hashed part of the url (or an error occurs)
         var tokenResponse = _parseTokenResponse(hash);
 
         // if we have an access token then save it away and proceed
-
         if (tokenResponse["access_token"]) {
 
             // recalculate expires_at using the offset (seconds) and current time. we subtract 1 minute for good measure
@@ -48,24 +63,7 @@ define(["jquery", "handlebars", "config"], function($, Handlebars, config) {
                 return;
             }
 
-            window.sessionStorage.setItem("access_token", tokenResponse["access_token"]);
-            window.sessionStorage.setItem("principalID", tokenResponse["principalID"]);
-            window.sessionStorage.setItem("principalIDNS", tokenResponse["principalIDNS"]);
-            window.sessionStorage.setItem("context_institution_id", tokenResponse["context_institution_id"]);
-            window.sessionStorage.setItem("authenticating_institution_id", tokenResponse["authenticating_institution_id"]);
-            window.sessionStorage.setItem("token_type", tokenResponse["token_type"]);
-            window.sessionStorage.setItem("expires_in", tokenResponse["expires_in"]);
-            window.sessionStorage.setItem("expires_at", tokenResponse["expires_at"]);
-
-            // if we are logging in with the support institution then ask them what institution they
-            // want to act on behalf of and go through the whole flow again!
-            if (institution == config.SUPPORT_INSTITUTION) {
-                console.log("We are logging in with the support institution!");
-                if (callback) {
-                    setTimeout(callback(), 1000);
-                }
-                return;
-            }
+            window.sessionStorage.setItem("token_response", JSON.stringify(tokenResponse));
 
             if (callback) {
                 setTimeout(callback(), 1000);
@@ -74,17 +72,22 @@ define(["jquery", "handlebars", "config"], function($, Handlebars, config) {
         } else {
 
             // Pass the error information
-            window.sessionStorage.setItem("error",tokenResponse.error);
-            window.sessionStorage.setItem("http_code",tokenResponse.http_code);
-            window.sessionStorage.setItem("error_description",tokenResponse.error_description);
-            window.sessionStorage.setItem("authenticatingInstitutionId",tokenResponse.authenticatingInstitutionId);
 
-            if (callback) callback();
+            window.sessionStorage.setItem("error_response", JSON.stringify(tokenResponse));
+
+            if (callback) {
+                setTimeout(callback(), 1000);
+            }
 
         }
         window.location.href = "index.html";
     }
 
+    /**
+     * Formulate the authorization request and handle the flow.
+     * @param targetView
+     * @private
+     */
     function _authorize(targetView) {
 
         authorizeComplete = false;
@@ -127,7 +130,7 @@ define(["jquery", "handlebars", "config"], function($, Handlebars, config) {
             //+ ",keyboardDisplayRequiresUserAction=no"
             + (clearCache ? ",clearcache=yes,clearsessioncache=yes" : ",clearcache=no,clearsessioncache=no"));
 
-        // intercept each request and see if we've reached the end of the auth flow
+        // Intercept each request and see if we've reached the end of the auth flow
         // when we are inBrowser (running locally) then this isn't called and we end up
         // on the redirect.html page (see it for more detail)
         authWindow.addEventListener("loadstart", function(event) {

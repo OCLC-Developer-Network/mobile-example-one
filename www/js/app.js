@@ -1,24 +1,24 @@
 define(["app/authorize", "jquery"], function(authorize, $) {
 
-    function _displayToken() {
-        var accessTokenProperties = $(".access-token-properties");
+    function _displayToken(tokenResponseString) {
+        var accessTokenDisplay = $(".access-token"),
+            json = JSON.parse(tokenResponseString);
 
-        accessTokenProperties.append("<div class='key'>access_token</div>" +
-            "<div class='value'>" + window.sessionStorage.getItem("access_token") + "</div>");
-        accessTokenProperties.append("<div class='key'>principalID</div>" +
-            "<div class='value'>" + window.sessionStorage.getItem("principalID") + "</div>");
-        accessTokenProperties.append("<div class='key'>principalIDNS</div>" +
-            "<div class='value'>" + window.sessionStorage.getItem("principalIDNS") + "</div>");
-        accessTokenProperties.append("<div class='key'>context_institution_id</div>" +
-            "<div class='value'>" + window.sessionStorage.getItem("context_institution_id") + "</div>");
-        accessTokenProperties.append("<div class='key'>authenticatin_institution_id</div>" +
-            "<div class='value'>" + window.sessionStorage.getItem("authenticating_institution_id") + "</div>");
-        accessTokenProperties.append("<div class='key'>token_type</div>" +
-            "<div class='value'>" + window.sessionStorage.getItem("token_type") + "</div>");
-        accessTokenProperties.append("<div class='key'>expires_in</div>" +
-            "<div class='value'>" + window.sessionStorage.getItem("expires_in") + "</div>");
-        accessTokenProperties.append("<div class='key'>expires_at</div>" +
-            "<div class='value'>" + window.sessionStorage.getItem("expires_at") + "</div>");
+        for (var key in json) {
+            accessTokenDisplay.append("<div class='key'>" + key + "</div>" +
+                "<div class='value'>" + json[key] + "</div>");
+        }
+    }
+
+    function _displayError(errorResponseString) {
+        var errorResponseDisplay = $(".error-response"),
+            errorKeys = ["error", "http_code", "error_description", "authenticatingInstitutionId"],
+            json = JSON.parse(errorResponseString);
+
+        for (var i = 0; i < errorKeys.length; i++) {
+            errorResponseDisplay.append("<div class='key'>" + errorKeys[i] + "</div>" +
+                "<div class='value'>" + json[errorKeys[i]] + "</div>");
+        }
     }
 
     return {
@@ -29,18 +29,28 @@ define(["app/authorize", "jquery"], function(authorize, $) {
             document.addEventListener("deviceready", this.onDeviceReady, false);
         },
         onDeviceReady: function() {
-            console.log("*** onDeviceReady");
-            console.log(window.location.href);
+            var tokenResponseString = window.sessionStorage.getItem("token_response"),
+                errorResponseString = window.sessionStorage.getItem("error_response");
+
+            console.log("onDeviceReady");
+
+            // When running the app in development mode in a browser, you need to call the redirect logic
+            // in app.js manually.
             if (window.location.href.indexOf("access_token") !== -1) {
-                console.log("*** handleRedirect");
                 authorize.handleRedirect(window.location.href);
             }
-            if (window.sessionStorage.getItem("access_token")) {
-                console.log("*** _displayToken()");
-                _displayToken();
+
+            // If we are coming to this page after authentication, either the tokenResponseString or the
+            // errorResponseString will be set in session storage.
+            if (tokenResponseString) {
+                _displayToken(tokenResponseString);
             }
+            if (errorResponseString) {
+                _displayError(errorResponseString);
+            }
+
+            // Event handlers
             $(".auth-button").on("click", function() {
-                console.log("**** auth-button click");
                 authorize.authorize("");
             });
         }
