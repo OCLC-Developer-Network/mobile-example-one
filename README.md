@@ -1,6 +1,8 @@
 This is a starter PhoneGap application with a node.js builder, bower to manage javascript app dependencies, jasmine and karma for unit tests. It demonstrates the basic OAuth 2 flow required to obtain an authentication token to access OCLC web services.
 
-<img align="left" src="https://github.com/OCLC-Developer-Network/mobile-example-one/blob/master/screen_shot.png" width=200"/>
+<div style="float: left; padding-bottom: 12px;">
+<img src="https://github.com/OCLC-Developer-Network/mobile-example-one/blob/master/screen_shot.png" width=200"/>
+</div>
 
 These instructions assume you are developing on a Mac. See [Installing Cordova on Windows](https://evothings.com/doc/build/cordova-install-windows.html) for Windows installation instructions.
 
