@@ -1,4 +1,4 @@
-This is a starter PhoneGap application with a node.js builder, bower to manage javascript app dependencies, jasmine and karma for unit tests. It builds a simple tilt meter.
+This is a starter PhoneGap application with a node.js builder, bower to manage javascript app dependencies, jasmine and karma for unit tests. It demonstrates the basic OAuth 2 flow required to obtain an authentication token to access OCLC web services.
 
 <div style="width:100%; text-align:center; padding-bottom: 12px;">
 <img src="https://github.com/geocolumbus/geomob/blob/master/screen_shot.png" width=200"/>
@@ -34,16 +34,25 @@ Add $JAVA_HOME/bin, $ANDROID_HOME/platform-tools and $ANDROID_HOME/tools to your
 
 Add ```./node_modules/.bin``` to your PATH environment variable.
 
+# Get authentication credentials from OCLC
+
+To make this demo work, you will need to obtain a WSKey.
+
+Copy ```www/js/config-example.js``` to ```www/js/config.js``` and fill in the missing configuraiton items.
+
+See [How to Request a WSKey](https://www.oclc.org/developer/develop/authentication/how-to-request-a-wskey.en.html) for details on how to obtain the configuration parameters from OCLC for your institution.
+
 # Installation
 
 ```git clone https://github.com/OCLC-Developer-Network/mobile-example-one```
 
-## Automatic 
+## Build the project 
+
+Install the entire project with this command:
 
 ```npm run build```
 
-## Manual
-
+The above command executes these steps:
 
 ```
 npm install
