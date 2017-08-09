@@ -34,11 +34,11 @@ Add $JAVA_HOME/bin, $ANDROID_HOME/platform-tools and $ANDROID_HOME/tools to your
 
 Add ```./node_modules/.bin``` to your PATH environment variable.
 
-# Get authentication credentials from OCLC
+## Get authentication credentials from OCLC
 
 To make this demo work, you will need to obtain a WSKey.
 
-Copy ```www/js/config-example.js``` to ```www/js/config.js``` and fill in the missing configuraiton items.
+Copy ```www/js/config-example.js``` to ```www/js/config.js``` and fill in the missing configuration items.
 
 See [How to Request a WSKey](https://www.oclc.org/developer/develop/authentication/how-to-request-a-wskey.en.html) for details on how to obtain the configuration parameters from OCLC for your institution.
 
@@ -69,11 +69,11 @@ phonegap build
 If you get a message like "Error code 65 for command: xcodebuild with args ..." then it means that you need to add your GroupId to the HelloWorld iOS project using XCode. Then rerun PhoneGap Build.
 
 
-# Running
+# Run the Project
 
 You can run the PhoneGap app in an attached device, an emulator or the browser.
 
-### Browser
+## Browser
 
 There are various run options:
 
