@@ -1,11 +1,11 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="org.oclc.campbelg.mobile1" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
-    <name>Hello World</name>
+    <name>Mobile Example One</name>
     <description>
-        Hello World sample application that responds to the deviceready event.
+        An example of OAuth 2 authentication for OCLC Mobile Services
     </description>
-    <author email="support@phonegap.com" href="http://phonegap.com">
-        PhoneGap Team
+    <author email="campbelg@oclc.org" href="http://oclc.org">
+        George Campbell
     </author>
     <content src="index.html" />
     <preference name="DisallowOverscroll" value="true" />
